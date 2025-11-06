@@ -16,7 +16,7 @@ import {
 import AddStudyMaterial from "./AddStudyMaterial";
 import AddStudents from "./AddStudents";
 import AddTeachers from "./AddTeachers";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const AdminDashboard = () => {
   const [adminName, setAdminName] = useState("");
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/courses");
+      const res = await fetch(`${API_URL}/api/courses`);
       const data = await res.json();
       setCourses(data);
     } catch (error) {
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/students");
+      const res = await fetch(`${API_URL}/api/students`);
       const data = await res.json();
       setStudents(data);
     } catch (error) {
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
 
   const fetchTeachers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/teachers");
+      const res = await fetch(`${API_URL}/api/teachers`);
       const data = await res.json();
       setTeachers(data);
     } catch (error) {
@@ -84,8 +84,8 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const url = editCourseId
-        ? `http://localhost:5000/api/courses/update/${editCourseId}`
-        : "http://localhost:5000/api/courses/add";
+        ? `${API_URL}/api/courses/update/${editCourseId}`
+        : `${API_URL}/api/courses/add`;
       const method = editCourseId ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/courses/delete/${id}`, {
+      const res = await fetch(`${API_URL}/api/courses/delete/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

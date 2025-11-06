@@ -5,14 +5,14 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      const { data } = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
       setMessage(data.message);
     } catch (error) {
       setMessage(error.response?.data?.message || "Something went wrong!");

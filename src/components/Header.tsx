@@ -3,7 +3,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import brand from "../images/brand.png";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -41,8 +41,8 @@ const Header = () => {
 
     try {
       const url = isRegister
-        ? "http://localhost:5000/api/auth/register"
-        : "http://localhost:5000/api/auth/login";
+        ? `${API_URL}/api/auth/register`
+        : `${API_URL}/api/auth/login`;
 
       const payload = isRegister
         ? { name: formData.name, email: formData.email, password: formData.password }
@@ -89,7 +89,7 @@ const Header = () => {
       if (!email) return alert("Please enter your registered email.");
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+        `${API_URL}/api/auth/forgot-password`,
         { email }
       );
 

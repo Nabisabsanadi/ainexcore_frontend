@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BookOpen, FileText, Video, Image as ImageIcon } from "lucide-react";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const CourseDetails = () => {
 
   const fetchCourseDetails = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/courses/${id}/details`);
+      const res = await fetch(`${API_URL}/api/courses/${id}/details`);
       const data = await res.json();
       setCourse(data.course);
       setMaterials(data.studyMaterials || []);

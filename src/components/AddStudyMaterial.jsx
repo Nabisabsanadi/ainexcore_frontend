@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const AddStudyMaterial = () => {
   const [courses, setCourses] = useState([]);
   const [materialData, setMaterialData] = useState({
@@ -12,7 +12,7 @@ const AddStudyMaterial = () => {
 
   // Fetch courses from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/courses")
+    fetch(`${API_URL}/api/courses`)
       .then((res) => res.json())
       .then((data) => setCourses(data))
       .catch((err) => console.error("Error fetching courses:", err));
@@ -33,7 +33,7 @@ const AddStudyMaterial = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/study-materials/add", {
+      const res = await fetch(`${API_URL}/api/study-materials/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(materialData),

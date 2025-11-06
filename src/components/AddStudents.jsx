@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const AddStudents = () => {
   const [showForm, setShowForm] = useState(false);
   const [students, setStudents] = useState([]);
@@ -21,7 +21,7 @@ const AddStudents = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/students");
+      const res = await fetch(`${API_URL}/api/students`);
       const data = await res.json();
       setStudents(data);
     } catch (error) {
@@ -31,7 +31,7 @@ const AddStudents = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/courses");
+      const res = await fetch(`${API_URL}/api/courses`);
       const data = await res.json();
       setCourses(data);
     } catch (error) {
@@ -47,8 +47,8 @@ const AddStudents = () => {
     e.preventDefault();
     try {
       const url = editId
-        ? `http://localhost:5000/api/students/update/${editId}`
-        : "http://localhost:5000/api/students/add";
+        ? `${API_URL}/api/students/update/${editId}`
+        : `${API_URL}/api/students/add`;
       const method = editId ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -87,7 +87,7 @@ const AddStudents = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this student?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/students/delete/${id}`, {
+      const res = await fetch(`${API_URL}/api/students/delete/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {

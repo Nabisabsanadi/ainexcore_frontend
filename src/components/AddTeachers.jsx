@@ -13,7 +13,7 @@ const AddTeachers = () => {
     course: "",
   });
   const [editId, setEditId] = useState(null);
-
+  const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
   useEffect(() => {
     fetchTeachers();
     fetchCourses();
@@ -21,7 +21,7 @@ const AddTeachers = () => {
 
   const fetchTeachers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/teachers");
+      const res = await fetch(`${API_URL}/api/teachers`);
       const data = await res.json();
       setTeachers(data);
     } catch (error) {
@@ -31,7 +31,7 @@ const AddTeachers = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/courses");
+      const res = await fetch(`${API_URL}/api/courses`);
       const data = await res.json();
       setCourses(data);
     } catch (error) {
@@ -47,8 +47,8 @@ const AddTeachers = () => {
     e.preventDefault();
     try {
       const url = editId
-        ? `http://localhost:5000/api/teachers/update/${editId}`
-        : "http://localhost:5000/api/teachers/add";
+        ? `${API_URL}/api/teachers/update/${editId}`
+        : `${API_URL}/api/teachers/add`;
       const method = editId ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -81,7 +81,7 @@ const AddTeachers = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this teacher?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/teachers/delete/${id}`, {
+      const res = await fetch(`${API_URL}/api/teachers/delete/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {

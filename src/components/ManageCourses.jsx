@@ -6,14 +6,14 @@ const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
   useEffect(() => {
     fetchCourses();
   }, []);
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/courses/show");
+      const res = await fetch(`${API_URL}/api/courses/show`);
       const data = await res.json();
       setCourses(data);
     } catch (error) {

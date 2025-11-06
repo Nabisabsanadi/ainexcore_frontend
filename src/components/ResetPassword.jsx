@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const { data } = await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, {
+      const { data } = await axios.post(`${API_URL}/api/auth/reset-password/${token}`, {
         password,
       });
       setMessage(data.message);
