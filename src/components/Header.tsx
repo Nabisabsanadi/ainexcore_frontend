@@ -223,7 +223,7 @@ const Header = () => {
                 setIsForgot(false);
                 setIsRegister(false);
               }}
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl"
+               className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
             >
               ✕
             </button>
