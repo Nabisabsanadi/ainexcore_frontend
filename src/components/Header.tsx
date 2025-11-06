@@ -203,7 +203,7 @@ const Header = () => {
                     setShowLogin(true);
                     setMenuOpen(false);
                   }}
-                  className="text-[#6C2AA6] hover:text-[#F05A28] font-medium transition"
+                   className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
                 >
                   Sign In
                 </button>
