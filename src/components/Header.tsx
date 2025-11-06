@@ -223,7 +223,7 @@ const Header = () => {
                 setIsForgot(false);
                 setIsRegister(false);
               }}
-               className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
+               className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl"
             >
               ✕
             </button>
@@ -278,7 +278,7 @@ const Header = () => {
 
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                    className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
                   >
                     {isRegister ? "Register" : "Login"}
                   </button>
