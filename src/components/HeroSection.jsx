@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import heroImg from "../images/herobg.jpg";
+import heroImg from "../images/herobg.webp";
 
 const HeroSection = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
