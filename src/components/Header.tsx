@@ -3,7 +3,9 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import brand from "../images/brand.png";
+
 const API_URL = "https://ainexcore-backend.onrender.com"; // Live backend URL
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -21,7 +23,6 @@ const Header = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Check user on load
   useEffect(() => {
     const storedName = localStorage.getItem("userName");
     const token = localStorage.getItem("token");
@@ -30,12 +31,19 @@ const Header = () => {
     }
   }, []);
 
-  // Input change
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (showLogin) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showLogin]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // LOGIN / REGISTER handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,7 +59,6 @@ const Header = () => {
       const { data } = await axios.post(url, payload);
 
       if (!isRegister) {
-        // Login success
         const user = data?.user || {};
         localStorage.setItem("token", data?.token || "");
         localStorage.setItem("userName", user?.name || "User");
@@ -59,15 +66,9 @@ const Header = () => {
 
         setUserName(user?.name || "User");
         alert("Login Successful!");
-
-        // Notify App.jsx that token is updated
         window.dispatchEvent(new Event("storage"));
-
-        // Close modal & redirect
         setShowLogin(false);
         setMenuOpen(false);
-
-        // Redirect to Admin Dashboard
         navigate("/admin");
       } else {
         alert("Registration Successful! Please login now.");
@@ -81,17 +82,13 @@ const Header = () => {
     }
   };
 
-  // Forgot password
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
       const { email } = formData;
       if (!email) return alert("Please enter your registered email.");
 
-      const { data } = await axios.post(
-        `${API_URL}/api/auth/forgot-password`,
-        { email }
-      );
+      const { data } = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
 
       alert(data?.message || "Reset link sent to your email!");
       setIsForgot(false);
@@ -102,27 +99,26 @@ const Header = () => {
     }
   };
 
-  //  Logout
   const handleLogout = () => {
     localStorage.clear();
     setUserName("");
     navigate("/");
-    window.dispatchEvent(new Event("storage")); // 🔥 trigger state update
+    window.dispatchEvent(new Event("storage"));
   };
 
   return (
     <>
       {/* ===== Header ===== */}
-      <header className="shadow-sm shadow-gray-300 py-2 bg-white sticky top-0 z-50">
-        <div className="flex items-center justify-between max-w-6xl mx-auto px-6">
+      <header className="shadow-sm shadow-gray-300 py-2 bg-white sticky top-0 z-50 w-full">
+        <div className="flex items-center justify-between max-w-6xl mx-auto px-4 sm:px-6">
           {/* Logo */}
-          <Link to="/">
-            <img src={brand} alt="Ainex Core Academy" className="w-40 object-contain" />
+          <Link to="/" className="flex-shrink-0">
+            <img src={brand} alt="Ainex Core Academy" className="w-36 sm:w-40 object-contain" />
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:block">
-            <ul className="flex gap-10 font-medium">
+            <ul className="flex gap-8 lg:gap-10 font-medium">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link
@@ -162,7 +158,7 @@ const Header = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-[#003C8F] text-2xl"
+            className="md:hidden text-[#003C8F] text-2xl focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <FiX /> : <FiMenu />}
@@ -171,8 +167,8 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-white shadow-inner py-4 px-6 space-y-4 font-medium">
-            <ul className="flex flex-col gap-4 text-[#003C8F]">
+          <div className="md:hidden bg-white shadow-inner py-4 px-6 space-y-4 font-medium animate-fadeIn">
+            <ul className="flex flex-col gap-3 text-[#003C8F]">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link
@@ -203,7 +199,7 @@ const Header = () => {
                     setShowLogin(true);
                     setMenuOpen(false);
                   }}
-                   className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
+                  className="w-full bg-gradient-to-r from-[#003C8F] via-[#6C2AA6] to-[#F05A28] text-white py-2 rounded-lg font-medium hover:opacity-90 transition"
                 >
                   Sign In
                 </button>
@@ -215,15 +211,15 @@ const Header = () => {
 
       {/* ===== Modal (Login/Register/Forgot) ===== */}
       {showLogin && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center z-[1000] animate-fadeIn">
-          <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md relative">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[1000] animate-fadeIn px-4">
+          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md relative">
             <button
               onClick={() => {
                 setShowLogin(false);
                 setIsForgot(false);
                 setIsRegister(false);
               }}
-               className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl"
+              className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl"
             >
               ✕
             </button>
@@ -259,7 +255,8 @@ const Header = () => {
                       onChange={handleChange}
                       placeholder="Enter your email"
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      required autoComplete="off" 
+                      required
+                      autoComplete="off"
                     />
                   </div>
 
@@ -272,7 +269,8 @@ const Header = () => {
                       onChange={handleChange}
                       placeholder="Enter your password"
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      required autoComplete="off"
+                      required
+                      autoComplete="off"
                     />
                   </div>
 
