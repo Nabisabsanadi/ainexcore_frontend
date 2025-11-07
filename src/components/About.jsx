@@ -6,13 +6,13 @@ const About = () => {
     <section className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
         {/* Left side - Image */}
-        <div className="relative group order-1 md:order-none">
+        <div className="relative overflow-hidden rounded-2xl shadow-lg group order-1 md:order-none">
           <img
             src={brand}
             alt="About AinexCore Academy"
-            className="rounded-2xl shadow-lg w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 transform group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#003C8F]/30 to-[#F05A28]/30 rounded-2xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#003C8F]/30 to-[#F05A28]/30 transition-opacity duration-500 group-hover:opacity-40"></div>
         </div>
 
         {/* Right side - Content */}
